@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
-import 'package:the_wall_uts_ardiansyah/pages/login_page.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({super.key});

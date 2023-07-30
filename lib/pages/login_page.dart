@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_wall_uts_ardiansyah/components/button.dart';
 import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
-import 'package:the_wall_uts_ardiansyah/pages/home_page.dart';
-import 'package:the_wall_uts_ardiansyah/pages/register_page.dart';
 import 'package:the_wall_uts_ardiansyah/pages/reset_password.dart';
 
 class LoginPage extends StatefulWidget {
