@@ -1,8 +1,9 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:the_wall_uts_ardiansyah/pages/notification_page.dart';
-import 'package:the_wall_uts_ardiansyah/pages/post_page.dart';
-import 'package:the_wall_uts_ardiansyah/pages/profile_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:the_wall_uts_ardiansyah/components/post.dart';
+import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,41 +13,108 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int index = 1;
+  final currentUser = FirebaseAuth.instance.currentUser!;
 
-  final screens = const [
-    NotificationPage(),
-    PostPage(),
-    ProfilePage(),
-  ];
+  final textController = TextEditingController();
+
+  void signOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
+  void postMessage() {
+    if (textController.text.isNotEmpty) {
+      FirebaseFirestore.instance.collection("User Posts").add({
+        'UserEmail': currentUser.email,
+        'Message': textController.text,
+        'TimeStamp': Timestamp.now(),
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final items = <Widget>[
-      const Icon(
-        Icons.notifications,
-        color: Colors.white,
-      ),
-      const Icon(
-        Icons.home,
-        color: Colors.white,
-      ),
-      const Icon(
-        Icons.settings,
-        color: Colors.white,
-      )
-    ];
     return Scaffold(
-      extendBody: true,
-      body: screens[index],
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        color: Colors.redAccent.shade700,
-        animationDuration: const Duration(milliseconds: 300),
-        height: 60,
-        items: items,
-        index: index,
-        onTap: (index) => setState(() => this.index = index),
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            "POST",
+            style: GoogleFonts.bebasNeue(),
+          ),
+        ),
+        backgroundColor: Colors.redAccent[700],
+        actions: [
+          IconButton(
+            onPressed: signOut,
+            icon: const Icon(Icons.logout),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+              child: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("User Posts")
+                .orderBy(
+                  "TimeStamp",
+                  descending: false,
+                )
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    final post = snapshot.data!.docs[index];
+                    return PostBox(
+                      message: post['Message'],
+                      user: post['UserEmail'],
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    'Error:${snapshot.error}',
+                    style: GoogleFonts.bebasNeue(),
+                  ),
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          )),
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MyTextField(
+                    controller: textController,
+                    hintText: "Write something to post...",
+                    obsureText: false,
+                  ),
+                ),
+                IconButton(
+                    hoverColor: Colors.white,
+                    highlightColor: Colors.white,
+                    splashColor: Colors.redAccent.shade700,
+                    focusColor: Colors.redAccent.shade700,
+                    onPressed: postMessage,
+                    icon: Icon(
+                      Icons.arrow_circle_up,
+                      color: Colors.redAccent.shade700,
+                    )),
+              ],
+            ),
+          ),
+          Text(
+            "Logged in as: ${currentUser.email!}",
+            style: GoogleFonts.bebasNeue(),
+          )
+        ],
       ),
     );
   }

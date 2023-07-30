@@ -8,15 +8,18 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          color: Colors.redAccent[700],
-          borderRadius: BorderRadius.circular(12)),
-      child: Center(
-        child: Text(
-          text,
-          style: GoogleFonts.bebasNeue(color: Colors.white, fontSize: 18),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            color: Colors.redAccent[700],
+            borderRadius: BorderRadius.circular(12)),
+        child: Center(
+          child: Text(
+            text,
+            style: GoogleFonts.bebasNeue(color: Colors.white, fontSize: 18),
+          ),
         ),
       ),
     );
