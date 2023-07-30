@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:the_wall_uts_ardiansyah/components/button.dart';
+import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
 import 'package:the_wall_uts_ardiansyah/pages/home_page.dart';
 import 'package:the_wall_uts_ardiansyah/pages/register_page.dart';
 import 'package:the_wall_uts_ardiansyah/pages/reset_password.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,40 +50,18 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent.shade700),
-                          borderRadius: BorderRadius.circular(12)),
-                      hintText: 'Email',
-                      hintStyle: GoogleFonts.bebasNeue(),
-                      fillColor: Colors.grey[200],
-                      filled: true),
-                ),
+                child: MyTextField(
+                    controller: emailTextController,
+                    hintText: 'Email',
+                    obsureText: false),
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent.shade700),
-                          borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: MyTextField(
+                      controller: passwordTextController,
                       hintText: 'Password',
-                      hintStyle: GoogleFonts.bebasNeue(),
-                      fillColor: Colors.grey[200],
-                      filled: true),
-                ),
-              ),
+                      obsureText: true)),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -103,28 +87,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ));
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        color: Colors.redAccent[700],
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Center(
-                      child: Text(
-                        'Sign In',
-                        style: GoogleFonts.bebasNeue(
-                            color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ),
+                child: MyButton(onTap: () {}, text: 'Sign In'),
               ),
               const SizedBox(height: 25),
               Row(
@@ -137,13 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
-                          ));
-                    },
+                    onTap: widget.onTap,
                     child: Text(
                       'Register now',
                       style: GoogleFonts.bebasNeue(

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:the_wall_uts_ardiansyah/components/button.dart';
+import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
 import 'package:the_wall_uts_ardiansyah/pages/home_page.dart';
 import 'package:the_wall_uts_ardiansyah/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final Function()? onTap;
+  const RegisterPage({super.key, required this.onTap});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final emailTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+  final confirmPasswordTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,85 +49,31 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent.shade700),
-                          borderRadius: BorderRadius.circular(12)),
-                      hintText: 'Email',
-                      hintStyle: GoogleFonts.bebasNeue(),
-                      fillColor: Colors.grey[200],
-                      filled: true),
-                ),
+                child: MyTextField(
+                    controller: emailTextController,
+                    hintText: 'Email',
+                    obsureText: false),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent.shade700),
-                          borderRadius: BorderRadius.circular(12)),
-                      hintText: 'Password',
-                      hintStyle: GoogleFonts.bebasNeue(),
-                      fillColor: Colors.grey[200],
-                      filled: true),
-                ),
+                child: MyTextField(
+                    controller: passwordTextController,
+                    hintText: 'Password',
+                    obsureText: true),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.redAccent.shade700),
-                          borderRadius: BorderRadius.circular(12)),
-                      hintText: 'Confirm Password',
-                      hintStyle: GoogleFonts.bebasNeue(),
-                      fillColor: Colors.grey[200],
-                      filled: true),
-                ),
+                child: MyTextField(
+                    controller: confirmPasswordTextController,
+                    hintText: 'Confirm Password',
+                    obsureText: true),
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ));
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        color: Colors.redAccent[700],
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Center(
-                      child: Text(
-                        'Sign Up',
-                        style: GoogleFonts.bebasNeue(
-                            color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: MyButton(onTap: () {}, text: 'Sign Up')),
               const SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -133,13 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ));
-                    },
+                    onTap: widget.onTap,
                     child: Text(
                       'Login now',
                       style: GoogleFonts.bebasNeue(

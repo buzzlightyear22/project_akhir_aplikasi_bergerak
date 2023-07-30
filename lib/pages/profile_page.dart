@@ -26,17 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
           style: GoogleFonts.bebasNeue(),
         ),
         backgroundColor: Colors.redAccent.shade700,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ));
-              },
-              icon: const Icon(Icons.logout))
-        ],
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
       ),
       body: ListView(children: [
         const SizedBox(height: 50),

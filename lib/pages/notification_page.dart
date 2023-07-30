@@ -18,17 +18,7 @@ class NotificationPage extends StatelessWidget {
         ),
         title: Text('NOTIFICATIONS', style: GoogleFonts.bebasNeue()),
         backgroundColor: Colors.redAccent.shade700,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ));
-              },
-              icon: const Icon(Icons.logout))
-        ],
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
       ),
       body: ListView(
         children: const [

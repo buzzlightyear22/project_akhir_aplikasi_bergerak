@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "55067920808",
+    "project_id": "projectapk-e9fe6",
+    "storage_bucket": "projectapk-e9fe6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55067920808:android:5b35a8522e926d5fc4359d",
+        "android_client_info": {
+          "package_name": "com.example.the_wall_uts_ardiansyah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "55067920808-es6kdndahoj3krv2s7p9hqh2keuun3ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOGe57QfGooLvJWz1ZOfH5DYwFDRCYBXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "55067920808-es6kdndahoj3krv2s7p9hqh2keuun3ht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
