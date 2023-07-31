@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_wall_uts_ardiansyah/components/button.dart';
 import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
-import 'package:the_wall_uts_ardiansyah/pages/reset_password.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -90,28 +89,6 @@ class _LoginPageState extends State<LoginPage> {
                       controller: passwordTextController,
                       hintText: 'Password',
                       obsureText: true)),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ResetPasswordPage(),
-                            ));
-                      },
-                      child: Text(
-                        'Reset Password?',
-                        style: GoogleFonts.bebasNeue(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),

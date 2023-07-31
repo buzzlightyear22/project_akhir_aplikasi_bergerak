@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_wall_uts_ardiansyah/components/comment.dart';
 import 'package:the_wall_uts_ardiansyah/components/comment_button.dart';
+import 'package:the_wall_uts_ardiansyah/components/delete_button.dart';
 import 'package:the_wall_uts_ardiansyah/components/like_button.dart';
 import 'package:the_wall_uts_ardiansyah/helper/helper_methods.dart';
 
@@ -110,6 +111,62 @@ class _PostBoxState extends State<PostBox> {
     );
   }
 
+  void deletePost() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Delete Post",
+          style: GoogleFonts.bebasNeue(),
+        ),
+        content: Text(
+          "Are you sure you want to delete this post?",
+          style: GoogleFonts.bebasNeue(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              "Cancel",
+              style: GoogleFonts.bebasNeue(),
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              final commentDocs = await FirebaseFirestore.instance
+                  .collection("User Posts")
+                  .doc(widget.postId)
+                  .collection("Comments")
+                  .get();
+
+              for (var doc in commentDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection("User Posts")
+                    .doc(widget.postId)
+                    .collection("Comments")
+                    .doc(doc.id)
+                    .delete();
+              }
+              FirebaseFirestore.instance
+                  .collection("User Posts")
+                  .doc(widget.postId)
+                  .delete()
+                  .then((value) => print("post deleted"))
+                  .catchError(
+                      (error) => print("failed to delete post: $error"));
+
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Delete",
+              style: GoogleFonts.bebasNeue(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -123,28 +180,37 @@ class _PostBoxState extends State<PostBox> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(width: 20),
-          Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.message,
-                style: GoogleFonts.bebasNeue(),
-              ),
-              const SizedBox(height: 5),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.user,
-                    style: GoogleFonts.bebasNeue(color: Colors.grey[400]),
+                    widget.message,
+                    style: GoogleFonts.bebasNeue(),
                   ),
-                  Text(" • ",
-                      style: GoogleFonts.bebasNeue(color: Colors.grey[400])),
-                  Text(
-                    widget.time,
-                    style: GoogleFonts.bebasNeue(color: Colors.grey[400]),
-                  )
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Text(
+                        widget.user,
+                        style: GoogleFonts.bebasNeue(color: Colors.grey[400]),
+                      ),
+                      Text(" • ",
+                          style:
+                              GoogleFonts.bebasNeue(color: Colors.grey[400])),
+                      Text(
+                        widget.time,
+                        style: GoogleFonts.bebasNeue(color: Colors.grey[400]),
+                      )
+                    ],
+                  ),
                 ],
               ),
+              if (widget.user == currentUser.email)
+                DeleteButton(onTap: deletePost),
             ],
           ),
           const SizedBox(height: 10),
