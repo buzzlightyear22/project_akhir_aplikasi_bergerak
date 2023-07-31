@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:the_wall_uts_ardiansyah/components/drawer.dart';
 import 'package:the_wall_uts_ardiansyah/components/post.dart';
 import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
+import 'package:the_wall_uts_ardiansyah/helper/helper_methods.dart';
 import 'package:the_wall_uts_ardiansyah/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -83,6 +84,7 @@ class _HomePageState extends State<HomePage> {
                       user: post['UserEmail'],
                       postId: post.id,
                       likes: List<String>.from(post['Likes'] ?? []),
+                      time: formatDate(post['TimeStamp']),
                     );
                   },
                 );

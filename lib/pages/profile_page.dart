@@ -13,17 +13,47 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+  final usersCollection = FirebaseFirestore.instance.collection("Users");
   Future<void> editField(String field) async {
     String newValue = "";
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          "Edit " + field,
+          "Edit $field",
           style: GoogleFonts.bebasNeue(),
         ),
+        content: TextField(
+          autofocus: true,
+          style: GoogleFonts.bebasNeue(),
+          decoration: InputDecoration(
+              hintText: "Enter new $field",
+              hintStyle: GoogleFonts.bebasNeue(color: Colors.grey)),
+          onChanged: (value) {
+            newValue = value;
+          },
+        ),
+        actions: [
+          TextButton(
+            child: Text(
+              'Cancel',
+              style: GoogleFonts.bebasNeue(),
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: Text(
+              'Save',
+              style: GoogleFonts.bebasNeue(),
+            ),
+            onPressed: () => Navigator.of(context).pop(newValue),
+          ),
+        ],
       ),
     );
+    if (newValue.trim().isNotEmpty) {
+      await usersCollection.doc(currentUser.email).update({field: newValue});
+    }
   }
 
   @override
