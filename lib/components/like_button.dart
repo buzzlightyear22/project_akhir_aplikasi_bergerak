@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class MyLikeButton extends StatelessWidget {
   final bool isLiked;
-  void Function()? onTap;
-  MyLikeButton({super.key, required this.isLiked, required this.onTap});
+  final void Function()? onTap;
+  const MyLikeButton({super.key, required this.isLiked, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

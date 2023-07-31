@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:the_wall_uts_ardiansyah/components/drawer.dart';
 import 'package:the_wall_uts_ardiansyah/components/post.dart';
 import 'package:the_wall_uts_ardiansyah/components/text_field.dart';
+import 'package:the_wall_uts_ardiansyah/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,24 +37,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void goToProfilePage() {
+    Navigator.pop(context);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfilePage(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "POST",
-            style: GoogleFonts.bebasNeue(),
-          ),
+        title: Text(
+          "POST",
+          style: GoogleFonts.bebasNeue(),
         ),
         backgroundColor: Colors.redAccent[700],
-        actions: [
-          IconButton(
-            onPressed: signOut,
-            icon: const Icon(Icons.logout),
-          )
-        ],
+      ),
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOut: signOut,
       ),
       body: Column(
         children: [

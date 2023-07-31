@@ -4,7 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 class MyTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
-  const MyTextBox({super.key, required this.text, required this.sectionName});
+  final void Function()? onPressed;
+  const MyTextBox(
+      {super.key,
+      required this.text,
+      required this.sectionName,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class MyTextBox extends StatelessWidget {
                 style: GoogleFonts.bebasNeue(color: Colors.grey[500]),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: onPressed,
                 icon: const Icon(Icons.settings),
               ),
             ],
