@@ -233,7 +233,7 @@ class _PostBoxState extends State<PostBox> {
                   CommentButton(onTap: showCommentDialog),
                   const SizedBox(height: 5),
                   Text(
-                    '0',
+                    '...',
                     style: GoogleFonts.bebasNeue(color: Colors.grey),
                   ),
                 ],
